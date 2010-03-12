@@ -54,18 +54,18 @@ function prompt_symbol () {
   # Set color of dollar prompt based on return value of previous command.
   if test $1 -eq 0
   then
-      echo "${HOSTNAME} \$"
+      echo "\$"
   else
-      echo "${HOSTNAME} ${RED}\$${COLOR_NONE}"
+      echo "${RED}\$${COLOR_NONE}"
   fi
 }
  
 function prompt_func () {
   last_return_value=$?
   if is_git_repository; then
-    PS1="\w $(parse_git_branch)$(prompt_symbol $last_return_value) "
+    PS1="${HOSTNAME} \w $(parse_git_branch)$(prompt_symbol $last_return_value) "
   else
-    PS1="\w $(prompt_symbol $last_return_value) "
+    PS1="${HOSTNAME} \w $(prompt_symbol $last_return_value) "
   fi
 }
  
