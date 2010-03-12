@@ -54,9 +54,9 @@ function prompt_symbol () {
   # Set color of dollar prompt based on return value of previous command.
   if test $1 -eq 0
   then
-      echo "\$"
+      echo "${HOSTNAME} \$"
   else
-      echo "${RED}\$${COLOR_NONE}"
+      echo "${HOSTNAME} ${RED}\$${COLOR_NONE}"
   fi
 }
  
