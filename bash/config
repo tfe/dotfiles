@@ -1,0 +1,30 @@
+export RAILS_ENV="development"
+export TZ="/usr/share/zoneinfo/America/New_York"
+
+# don't put duplicate lines in the history. See bash(1) for more options
+export HISTCONTROL=ignoredups
+# ... and ignore same sucessive entries.
+export HISTCONTROL=ignoreboth
+
+
+source ~/.bash/git-prompt.sh
+
+if [[ `uname` == 'Darwin' ]]; then
+
+  export EDITOR="mate -wl1"
+  
+  # MAMP path addition
+  export PATH=$PATH:/Applications/MAMP/Library/bin
+
+  # MacPorts path additions
+  export PATH=$PATH:/usr/local/bin:/usr/local/sbin:/opt/local/bin:/opt/local/sbin
+  export MANPATH=$MANPATH:/opt/local/share/man
+
+elif [[ `uname` == 'Linux' ]]; then
+
+  export EDITOR='nano -dw'
+  
+fi
+
+
+

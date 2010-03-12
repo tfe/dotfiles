@@ -1,0 +1,36 @@
+[user]
+  name = <%= print("Git Name: "); STDOUT.flush; STDIN.gets.chomp %>
+  email = <%= print("Git Email: "); STDOUT.flush; STDIN.gets.chomp %>
+[github]
+  user = tfe
+  token = <%= print("GitHub Token: "); STDOUT.flush; STDIN.gets.chomp %>
+[color]
+  diff = auto
+  status = auto
+  branch = auto
+[core]
+  editor = <%= RUBY_PLATFORM =~ /darwin/ ? 'mate -wl1' : 'pico' %> 
+	excludesfile = <%= ENV['HOME'] %>/.gitignore
+[alias]
+  up = pull --rebase
+  pu = push
+  lg = log -p
+  ci = commit -v
+  ca = commit -v --amend
+  st = status
+  br = branch
+  co = checkout
+  df = diff
+  ap = add --patch .
+  rb = rebase
+  rbm = rebase master
+  rbi = rebase -i head~10
+  cp = cherry-pick
+  wip = !git add . && git commit -m "WIP."
+  pending = !git --no-pager log origin/master..master && echo
+  track = !sh -c 'git branch --track "$0" "origin/$0" && git checkout "$0"'
+  mt = mergetool
+[apply]
+  whitespace = nowarn
+[rerere]
+	enabled = 1
