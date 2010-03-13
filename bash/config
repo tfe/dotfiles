@@ -22,7 +22,7 @@ if [[ `uname` == 'Darwin' ]]; then
 
 elif [[ `uname` == 'Linux' ]]; then
 
-  export EDITOR='nano -dw'
+  export EDITOR='nano -w'
   
 fi
 
