@@ -7,7 +7,7 @@ IRB.conf[:HISTORY_FILE] = "#{ENV['HOME']}/.irb_history"
 
 IRB.conf[:PROMPT_MODE] = :SIMPLE
 
-%w[rubygems utility_belt].each do |gem|
+%w[rubygems utility_belt ap].each do |gem|
   begin
     require gem
   rescue LoadError
