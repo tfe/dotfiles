@@ -27,6 +27,7 @@
   rbi = rebase -i head~10
   cp = cherry-pick
   wip = !git add . && git commit -m "WIP."
+  unwip = !git reset head^
   pending = !git --no-pager log origin/master..master && echo
   track = !sh -c 'git branch --track "$0" "origin/$0" && git checkout "$0"'
   mt = mergetool
