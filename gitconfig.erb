@@ -14,15 +14,18 @@
 [alias]
   up = pull --rebase
   pu = push
+  upu = !git up && git pu
   lg = log -p
   ci = commit -v
+  cip = commit -v --patch
   ca = commit -v --amend
+  cap = commit -v --amend --patch
   st = status
   br = branch
   co = checkout
   df = diff
-  ap = add --patch .
   rb = rebase
+  ap = add --patch .
   rbm = rebase master
   rbi = rebase -i head~10
   cp = cherry-pick
