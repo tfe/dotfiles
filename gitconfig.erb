@@ -27,6 +27,7 @@
   rb = rebase
   ap = add --patch .
   rbm = rebase master
+  rbmu = !sh -c 'git co master && git pull --rebase && git co -'
   rbi = rebase -i head~10
   cp = cherry-pick
   wip = !git add . && git commit -m "WIP."
