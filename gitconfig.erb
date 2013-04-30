@@ -42,3 +42,7 @@
   default = current
 [pull]
   rebase = true
+<%= if RUBY_PLATFORM =~ /darwin/ %> 
+[merge]
+  tool = opendiff
+<% end %>
