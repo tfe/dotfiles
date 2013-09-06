@@ -1,7 +1,7 @@
 --type-add=ruby=.rake,.rakefile,.Rakefile
+--type-add=css=.scss,.sass
 --type-add=js=.coffee
 --type-set=markdown=.md,.markdown
---type-set=scss=.scss
---type-set=sass=.sass
 --type-set=haml=.haml
 --type-set=handlebars=.hbs
+--type-set=rabl=.rabl
