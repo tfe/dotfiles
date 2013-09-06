@@ -1,5 +1,4 @@
 #!/usr/bin/ruby
-require 'irb/completion'
 require 'irb/ext/save-history'
 
 IRB.conf[:AUTO_INDENT] = true
