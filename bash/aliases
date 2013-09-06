@@ -1,1 +1,2 @@
 alias pico='nano -dw'
+alias pianobar='pianokeys && pianobar'
