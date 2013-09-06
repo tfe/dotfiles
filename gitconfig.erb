@@ -2,14 +2,14 @@
   name = <%= print("Git Name: "); STDOUT.flush; STDIN.gets.chomp %>
   email = <%= print("Git Email: "); STDOUT.flush; STDIN.gets.chomp %>
 [github]
-  user = tfe
+  user = plainspace
   token = <%= print("GitHub Token: "); STDOUT.flush; STDIN.gets.chomp %>
 [color]
   diff = auto
   status = auto
   branch = auto
 [core]
-  editor = <%= RUBY_PLATFORM =~ /darwin/ ? 'mate -wl1' : 'pico' %> 
+  editor = <%= RUBY_PLATFORM =~ /darwin/ ? 'mate -wl1' : 'pico' %>
 	excludesfile = <%= ENV['HOME'] %>/.gitignore
 [alias]
   up = pull --rebase
