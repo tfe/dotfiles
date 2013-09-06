@@ -10,12 +10,10 @@ if [[ `uname` == 'Darwin' ]]; then
 
   export EDITOR="mate -wl1"
   
-  # MAMP path addition
-  export PATH=$PATH:/Applications/MAMP/Library/bin
-
   # MacPorts path additions
-  export PATH=$PATH:/usr/local/bin:/usr/local/sbin:/opt/local/bin:/opt/local/sbin
+  export PATH=/usr/local/bin:/usr/local/sbin:/opt/local/bin:/opt/local/sbin:$PATH
   export MANPATH=$MANPATH:/opt/local/share/man
+  export PYTHONPATH=$(brew --prefix)/lib/python2.7/site-packages
 
 elif [[ `uname` == 'Linux' ]]; then
 
