@@ -1,1 +1,21 @@
-alias pico='nano -dw'
+# ALIASES
+alias fs="foreman start"
+
+alias gs="git status"
+alias gcm="git checkout master"
+alias gpom="git pull origin master && git fetch origin"
+alias gmmnff="git merge master --no-ff"
+alias gp="git pull"
+alias gap="git add --patch"
+alias gco="git checkout "
+alias gpo="git push origin "
+
+alias wip="git add . && git commit -m 'WIP.'"
+alias unwip="git reset head^"
+
+alias diff="git mergetool -t opendiff"
+
+alias tests="rake db:test:prepare && bundle exec rspec -b"
+alias rakedb="rake db:migrate"
+
+alias cdlm="cd /Users/leapjared/Documents/leap/projects/"
