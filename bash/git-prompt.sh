@@ -113,7 +113,7 @@ function set_bash_prompt () {
   fi
 
   # Set the bash prompt variable. Set colour of user/host to green, current dir in blue
-  PS1="${LIGHT_GREEN}(\t)${COLOR_NONE}:${LIGHT_BLUE}\w${COLOR_NONE} ${BRANCH}${PROMPT_SYMBOL} "
+  PS1="${LIGHT_GREEN}(\t-\h)${COLOR_NONE}:${LIGHT_BLUE}\w${COLOR_NONE} ${BRANCH}${PROMPT_SYMBOL} "
 
   # Set the Terminal title to the current location
   echo -ne "\033]0;Terminal - ${PWD}\007"
