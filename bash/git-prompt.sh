@@ -60,39 +60,10 @@ function prompt_symbol () {
   fi
 }
 
-# Set the full bash prompt.
-function set_bash_prompt () {
-  # Set the PROMPT_SYMBOL variable. We do this first so we don't lose the
-  # return value of the last command.
-  set_prompt_symbol $?
-
-  # Set the BRANCH variable.
-  if is_git_repository ; then
-    set_git_branch
-  elif is_svn_repository ; then
-    set_svn_branch
-  else
-    BRANCH=''
-  fi
-
-  # Set the bash prompt variable. Set colour of user/host to green, current dir in blue
-  PS1="${LIGHT_GREEN}(\t)${COLOR_NONE}:${LIGHT_BLUE}\w${COLOR_NONE} ${BRANCH}${PROMPT_SYMBOL} "
-
-  # Set the Terminal title to the current location
-  echo -ne "\033]0;Terminal - ${PWD}\007"
-
-}
-
-# Tell bash to execute this function just before displaying its prompt.
-PROMPT_COMMAND=set_bash_prompt
-
 function prompt_func () {
   last_return_value=$?
-  if is_git_repository; then
-    PS1="${HOSTNAME} \w $(parse_git_branch)$(prompt_symbol $last_return_value) "
-  else
-    PS1="${HOSTNAME} \w $(prompt_symbol $last_return_value) "
-  fi
+  PS1="${LIGHT_GREEN}(\t)${COLOR_NONE}:${LIGHT_BLUE}\w${COLOR_NONE} ${BRANCH}${PROMPT_SYMBOL} "
+  echo -ne "\033]0;Terminal - ${PWD}\007"
 }
 
 PROMPT_COMMAND=prompt_func
