@@ -66,11 +66,21 @@ function set_bash_prompt () {
   # return value of the last command.
   set_prompt_symbol $?
 
+  # Set the BRANCH variable.
+  if is_git_repository ; then
+    set_git_branch
+  elif is_svn_repository ; then
+    set_svn_branch
+  else
+    BRANCH=''
+  fi
+
   # Set the bash prompt variable. Set colour of user/host to green, current dir in blue
   PS1="${LIGHT_GREEN}(\t)${COLOR_NONE}:${LIGHT_BLUE}\w${COLOR_NONE} ${BRANCH}${PROMPT_SYMBOL} "
 
   # Set the Terminal title to the current location
   echo -ne "\033]0;Terminal - ${PWD}\007"
+
 }
 
 # Tell bash to execute this function just before displaying its prompt.
