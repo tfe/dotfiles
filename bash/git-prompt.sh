@@ -1,11 +1,11 @@
 
 #!/bin/bash
 #
-# Set our bash prompt according to the branch/status of the current git 
+# Set our bash prompt according to the branch/status of the current git
 # repository.
 #
 # Taken from http://gist.github.com/31934
- 
+
         RED="\[\033[0;31m\]"
      YELLOW="\[\033[0;33m\]"
       GREEN="\[\033[0;32m\]"
@@ -15,11 +15,11 @@ LIGHT_GREEN="\[\033[1;32m\]"
       WHITE="\[\033[1;37m\]"
  LIGHT_GRAY="\[\033[0;37m\]"
  COLOR_NONE="\[\e[0m\]"
- 
+
 function is_git_repository {
   git branch > /dev/null 2>&1
 }
- 
+
 function parse_git_branch {
   is_git_repository || return 1
   git_status="$(git status 2> /dev/null)"
@@ -49,7 +49,7 @@ function parse_git_branch {
     echo "${state}[${branch}]${remote}${COLOR_NONE} "
   fi
 }
- 
+
 function prompt_symbol () {
   # Set color of dollar prompt based on return value of previous command.
   if test $1 -eq 0
@@ -59,7 +59,23 @@ function prompt_symbol () {
       echo "${RED}\$${COLOR_NONE}"
   fi
 }
- 
+
+# Set the full bash prompt.
+function set_bash_prompt () {
+  # Set the PROMPT_SYMBOL variable. We do this first so we don't lose the
+  # return value of the last command.
+  set_prompt_symbol $?
+
+  # Set the bash prompt variable. Set colour of user/host to green, current dir in blue
+  PS1="${LIGHT_GREEN}(\t)${COLOR_NONE}:${LIGHT_BLUE}\w${COLOR_NONE} ${BRANCH}${PROMPT_SYMBOL} "
+
+  # Set the Terminal title to the current location
+  echo -ne "\033]0;Terminal - ${PWD}\007"
+}
+
+# Tell bash to execute this function just before displaying its prompt.
+PROMPT_COMMAND=set_bash_prompt
+
 function prompt_func () {
   last_return_value=$?
   if is_git_repository; then
@@ -68,5 +84,5 @@ function prompt_func () {
     PS1="${HOSTNAME} \w $(prompt_symbol $last_return_value) "
   fi
 }
- 
+
 PROMPT_COMMAND=prompt_func
