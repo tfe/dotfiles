@@ -8,10 +8,10 @@ source ~/.bash/git-prompt.sh
 
 if [[ `uname` == 'Darwin' ]]; then
 
-  export EDITOR="mate -wl1"
-  
-  # MAMP path addition
-  export PATH=$PATH:/Applications/MAMP/Library/bin
+  export EDITOR="subl -wl1"
+
+  # Add RVM to PATH for scripting
+  export PATH=$PATH:$HOME/.rvm/bin
 
   # MacPorts path additions
   export PATH=$PATH:/usr/local/bin:/usr/local/sbin:/opt/local/bin:/opt/local/sbin
@@ -20,7 +20,7 @@ if [[ `uname` == 'Darwin' ]]; then
 elif [[ `uname` == 'Linux' ]]; then
 
   export EDITOR='nano -w'
-  
+
 fi
 
 

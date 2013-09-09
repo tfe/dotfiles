@@ -12,6 +12,9 @@
   editor = <%= RUBY_PLATFORM =~ /darwin/ ? 'mate -wl1' : 'pico' %>
 	excludesfile = <%= ENV['HOME'] %>/.gitignore
 [alias]
+  ci = commit -v
+  lol = log --graph --decorate --pretty=oneline --abbrev-commit
+  lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
   up = pull --rebase
   pu = push
   lg = log -p
@@ -31,6 +34,12 @@
   pending = !git --no-pager log origin/master..master && echo
   track = !sh -c 'git branch --track "$0" "origin/$0" && git checkout "$0"'
   mt = mergetool
+[difftool "sourcetree"]
+  cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+  path =
+[mergetool "sourcetree"]
+  cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+  trustExitCode = true
 [apply]
   whitespace = nowarn
 [rerere]
