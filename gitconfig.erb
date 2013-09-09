@@ -9,7 +9,7 @@
   status = auto
   branch = auto
 [core]
-  editor = <%= RUBY_PLATFORM =~ /darwin/ ? 'mate -wl1' : 'pico' %>
+  editor = <%= RUBY_PLATFORM =~ /darwin/ ? 'subl -wl1' : 'pico' %>
 	excludesfile = <%= ENV['HOME'] %>/.gitignore
 [alias]
   ci = commit -v
