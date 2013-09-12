@@ -19,3 +19,4 @@ alias tests="rake db:test:prepare && bundle exec rspec -b"
 alias rakedb="rake db:migrate"
 
 alias cdlm="cd /Users/leapjared/Documents/leap/projects/"
+alias cdvag="cd /Users/leapjared/Documents/leap/vagabond/"
