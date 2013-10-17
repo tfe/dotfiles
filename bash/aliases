@@ -13,7 +13,7 @@ alias gpo="git push origin "
 alias wip="git add . && git commit -m 'WIP.'"
 alias unwip="git reset head^"
 
-alias diff="git mergetool -t opendiff"
+alias gmt="git mergetool -t opendiff"
 
 alias tests="rake db:test:prepare && bundle exec rspec -b"
 alias rakedb="rake db:migrate"
