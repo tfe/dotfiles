@@ -12,7 +12,6 @@
   editor = <%= RUBY_PLATFORM =~ /darwin/ ? 'subl -wl1' : 'pico' %>
 	excludesfile = <%= ENV['HOME'] %>/.gitignore
 [alias]
-  ci = commit -v
   lol = log --graph --decorate --pretty=oneline --abbrev-commit
   lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
   up = pull --rebase
