@@ -13,8 +13,6 @@ if [[ `uname` == 'Darwin' ]]; then
   # Add RVM to PATH for scripting
   export PATH=$PATH:$HOME/.rvm/bin
   export PATH=$PATH:/usr/local/share/npm/bin
-  export EXERCISM_GITHUB_CLIENT_ID=67a89a89470749d3ba96
-  export EXERCISM_GITHUB_CLIENT_SECRET=d898f4a549c9b2ab5c7f351886ad73f4dc434449
 
   # MacPorts path additions
   export PATH=$PATH:/usr/local/bin:/usr/local/sbin:/opt/local/bin:/opt/local/sbin
