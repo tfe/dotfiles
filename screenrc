@@ -1,1 +1,11 @@
 defshell -bash
+
+# Turn off the splash screen.
+startup_message off 
+
+# Use a 30000-line scrollback buffer.
+defscrollback 30000 
+
+# Always show window list.
+hardstatus on
+hardstatus alwayslastline "%{b kw}%H %{r}%1` %{w}| %{-b kw}%u %-Lw%{= rW}%50> %n%f %t %{-}%+Lw%<"
