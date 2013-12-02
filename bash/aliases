@@ -9,6 +9,7 @@ alias gp="git pull"
 alias gap="git add --patch"
 alias gco="git checkout "
 alias gpo="git push origin "
+alias clearcache="cd tmp && rm -r cache"
 
 alias wip="git add . && git commit -m 'WIP.'"
 alias unwip="git reset head^"
