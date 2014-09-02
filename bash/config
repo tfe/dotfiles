@@ -9,14 +9,14 @@ source ~/.bash/git-prompt.sh
 if [[ `uname` == 'Darwin' ]]; then
 
   export EDITOR="subl -wl1"
-
+	
   # Add RVM to PATH for scripting
   export PATH=$PATH:$HOME/.rvm/bin
   export PATH=$PATH:/usr/local/share/npm/bin
 
   # MacPorts path additions
-  export PATH=$PATH:/usr/local/bin:/usr/local/sbin:/opt/local/bin:/opt/local/sbin
-  export MANPATH=$MANPATH:/opt/local/share/man
+  # export PATH=$PATH:/usr/local/bin:/usr/local/sbin:/opt/local/bin:/opt/local/sbin
+  # export MANPATH=$MANPATH:/opt/local/share/man
 
 elif [[ `uname` == 'Linux' ]]; then
 
