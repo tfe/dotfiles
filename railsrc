@@ -1,7 +1,0 @@
-#!/usr/bin/ruby
-
-# Log to STDOUT
-if !Object.const_defined?('RAILS_DEFAULT_LOGGER')
-  require 'logger'
-  RAILS_DEFAULT_LOGGER = Logger.new(STDOUT)
-end

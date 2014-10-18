@@ -1,124 +1,121 @@
+# Shell prompt based on the Solarized Dark theme.
+# Screenshot: http://i.imgur.com/EkEtphC.png
+# Heavily inspired by @necolas’s prompt: https://github.com/necolas/dotfiles
+# iTerm → Profiles → Text → use 13pt Monaco with 1.1 vertical spacing.
 
-#!/bin/bash
-#
-# Set our bash prompt according to the branch/status of the current git
-# repository.
-#
+if [[ $COLORTERM = gnome-* && $TERM = xterm ]] && infocmp gnome-256color >/dev/null 2>&1; then
+  export TERM='gnome-256color';
+elif infocmp xterm-256color >/dev/null 2>&1; then
+  export TERM='xterm-256color';
+fi;
 
-# Git dirty state in prompt
-# The various escape codes that we can use to color our prompt.
-        RED="\[\033[0;31m\]"
-     YELLOW="\[\033[0;33m\]"
-      GREEN="\[\033[0;32m\]"
-       BLUE="\[\033[0;34m\]"
-  LIGHT_RED="\[\033[1;31m\]"
-LIGHT_GREEN="\[\033[1;32m\]"
- LIGHT_BLUE="\[\033[1;34m\]"
-      WHITE="\[\033[1;37m\]"
- LIGHT_GRAY="\[\033[0;37m\]"
- COLOR_NONE="\[\e[0m\]"
+prompt_git() {
+  local s='';
+  local branchName='';
 
-# Detect whether the current directory is a git repository.
-function is_git_repository {
-  git branch > /dev/null 2>&1
-}
+  # Check if the current directory is in a Git repository.
+  if [ $(git rev-parse --is-inside-work-tree &>/dev/null; echo "${?}") == '0' ]; then
 
-# Detect whether the current directory is a subversion repository.
-function is_svn_repository {
-  test -d .svn
-}
+    # check if the current directory is in .git before running git checks
+    if [ "$(git rev-parse --is-inside-git-dir 2> /dev/null)" == 'false' ]; then
 
-# Determine the branch/state information for this git repository.
-function set_git_branch {
-  # Capture the output of the "git status" command.
-  git_status="$(git status 2> /dev/null)"
+      # Ensure the index is up to date.
+      git update-index --really-refresh -q &>/dev/null;
 
-  # Set color based on clean/staged/dirty.
-  if [[ ${git_status} =~ "working directory clean" ]]; then
-    state="${GREEN}"
-  elif [[ ${git_status} =~ "Changes to be committed" ]]; then
-    state="${YELLOW}"
+      # Check for uncommitted changes in the index.
+      if ! $(git diff --quiet --ignore-submodules --cached); then
+        s+='+';
+      fi;
+
+      # Check for unstaged changes.
+      if ! $(git diff-files --quiet --ignore-submodules --); then
+        s+='!';
+      fi;
+
+      # Check for untracked files.
+      if [ -n "$(git ls-files --others --exclude-standard)" ]; then
+        s+='?';
+      fi;
+
+      # Check for stashed files.
+      if $(git rev-parse --verify refs/stash &>/dev/null); then
+        s+='$';
+      fi;
+
+    fi;
+
+    # Get the short symbolic ref.
+    # If HEAD isn’t a symbolic ref, get the short SHA for the latest commit
+    # Otherwise, just give up.
+    branchName="$(git symbolic-ref --quiet --short HEAD 2> /dev/null || \
+      git rev-parse --short HEAD 2> /dev/null || \
+      echo '(unknown)')";
+
+    [ -n "${s}" ] && s=" [${s}]";
+
+    echo -e "${1}${branchName}${blue}${s}";
   else
-    state="${RED}"
-  fi
-
-  # Set arrow icon based on status against remote.
-  remote_pattern="Your branch is (.*) of"
-  if [[ ${git_status} =~ ${remote_pattern} ]]; then
-    if [[ ${BASH_REMATCH[1]} == "ahead" ]]; then
-      remote="↑"
-    else
-      remote="↓"
-    fi
-  else
-    remote=""
-  fi
-  diverge_pattern="Your branch and (.*) have diverged"
-  if [[ ${git_status} =~ ${diverge_pattern} ]]; then
-    remote="↕"
-  fi
-
-  # Get the name of the branch.
-  branch_pattern="^On branch ([^${IFS}]*)"
-  if [[ ${git_status} =~ ${branch_pattern} ]]; then
-    branch=${BASH_REMATCH[1]}
-  fi
-
-  # Set the final branch string.
-  BRANCH="${state}(${branch})${remote}${COLOR_NONE} "
+    return;
+  fi;
 }
 
-# Determine the branch information for this subversion repository. No support
-# for svn status, since that needs to hit the remote repository.
-function set_svn_branch {
-  # Capture the output of the "git status" command.
-  svn_info="$(svn info | egrep '^URL: ' 2> /dev/null)"
+if tput setaf 1 &> /dev/null; then
+  tput sgr0; # reset colors
+  bold=$(tput bold);
+  reset=$(tput sgr0);
+  # Solarized colors, taken from http://git.io/solarized-colors.
+  black=$(tput setaf 0);
+  blue=$(tput setaf 33);
+  cyan=$(tput setaf 37);
+  green=$(tput setaf 64);
+  orange=$(tput setaf 166);
+  purple=$(tput setaf 125);
+  red=$(tput setaf 124);
+  violet=$(tput setaf 61);
+  white=$(tput setaf 15);
+  yellow=$(tput setaf 136);
+else
+  bold='';
+  reset="\e[0m";
+  black="\e[1;30m";
+  blue="\e[1;34m";
+  cyan="\e[1;36m";
+  green="\e[1;32m";
+  orange="\e[1;33m";
+  purple="\e[1;35m";
+  red="\e[1;31m";
+  violet="\e[1;35m";
+  white="\e[1;37m";
+  yellow="\e[1;33m";
+fi;
 
-  # Get the name of the branch.
-  branch_pattern="^URL: .*/(branches|tags)/([^/]+)"
-  trunk_pattern="^URL: .*/trunk(/.*)?$"
-  if [[ ${svn_info} =~ $branch_pattern ]]; then
-    branch=${BASH_REMATCH[2]}
-  elif [[ ${svn_info} =~ $trunk_pattern ]]; then
-    branch='trunk'
-  fi
+# Highlight the user name when logged in as root.
+if [[ "${USER}" == "root" ]]; then
+  userStyle="${red}";
+else
+  userStyle="${orange}";
+fi;
 
-  # Set the final branch string.
-  BRANCH="(${branch}) "
-}
+# Highlight the hostname when connected via SSH.
+if [[ "${SSH_TTY}" ]]; then
+  hostStyle="${bold}${red}";
+else
+  hostStyle="${yellow}";
+fi;
 
-# Return the prompt symbol to use, colorized based on the return value of the
-# previous command.
-function set_prompt_symbol () {
-  if test $1 -eq 0 ; then
-      PROMPT_SYMBOL="\$"
-  else
-      PROMPT_SYMBOL="${RED}\$${COLOR_NONE}"
-  fi
-}
+# Set the terminal title to the current working directory.
+PS1="\[\033]0;\w\007\]";
+# PS1+="\[${bold}\]\n"; # newline
+PS1+="\[${bold}\]"; # newline
+PS1+="\[${userStyle}\]\u"; # username
+PS1+="\[${white}\] at ";
+PS1+="\[${hostStyle}\]\h"; # host
+PS1+="\[${white}\] in ";
+PS1+="\[${green}\]\w"; # working directory
+PS1+="\$(prompt_git \"${white} on ${violet}\")"; # Git repository details
+PS1+="\n";
+PS1+="\[${white}\]\$ \[${reset}\]"; # `$` (and reset color)
+export PS1;
 
-# Set the full bash prompt.
-function set_bash_prompt () {
-  # Set the PROMPT_SYMBOL variable. We do this first so we don't lose the
-  # return value of the last command.
-  set_prompt_symbol $?
-
-  # Set the BRANCH variable.
-  if is_git_repository ; then
-    set_git_branch
-  elif is_svn_repository ; then
-    set_svn_branch
-  else
-    BRANCH=''
-  fi
-
-  # Set the bash prompt variable. Set colour of user/host to green, current dir in blue
-  PS1="${LIGHT_GREEN}(\t:\h)${COLOR_NONE}:${LIGHT_BLUE}\w${COLOR_NONE} ${BRANCH}${PROMPT_SYMBOL} "
-
-  # Set the Terminal title to the current location
-  echo -ne "\033]0;Terminal - ${PWD}\007"
-
-}
-
-# Tell bash to execute this function just before displaying its prompt.
-PROMPT_COMMAND=set_bash_prompt
+PS2="\[${yellow}\]→ \[${reset}\]";
+export PS2;
