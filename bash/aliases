@@ -21,3 +21,6 @@ alias rakedb="rake db:migrate"
 
 alias planet="cd /Users/red/Documents/planet/"
 # alias cdvag="cd /Users/red/Documents/planet/vagabond/"
+
+alias head="python /Applications/Headphones/Headphones.py"
+alias sick="python /Applications/Sick-Beard/SickBeard.py"
