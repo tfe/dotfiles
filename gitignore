@@ -1,2 +1,12 @@
 .DS_Store
 scratch.md
+*.sublime-project
+*.sublime-workspace
+*.log
+*.log.*
+
+/*.tgz
+/build/
+/_site/
+/node_modules/
+/.vagrant/
