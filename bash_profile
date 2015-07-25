@@ -12,8 +12,8 @@ if [ -f ~/.localrc ]; then
   . ~/.localrc
 fi
 
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
+# export PATH="$HOME/.rbenv/bin:$PATH"
+# eval "$(rbenv init -)"
 
 # Setting PATH for Python 3.4
 # The orginal version is saved in .bash_profile.pysave
@@ -21,7 +21,6 @@ eval "$(rbenv init -)"
 # export PATH
 
 export PATH=/usr/local/bin:$PATH
-
 
 # Setting PATH for Python 3.4
 # The orginal version is saved in .bash_profile.pysave
